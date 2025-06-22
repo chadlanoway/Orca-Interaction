@@ -7,6 +7,13 @@
   <title>Orca Encounters Map</title>
   <link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/light/main.css" />
   <style>
+    /* This took forever to figure out what to target */
+    .calcite-mode-light {
+      --calcite-color-text-1: black !important;
+      --calcite-color-text-2: #ffffff !important;
+      --calcite-color-text-3: #ffffff !important;
+    }
+
     html,
     body,
     #viewDiv {
@@ -20,9 +27,10 @@
       position: absolute;
       top: 0;
       right: 0;
-      width: 300px;
+      width: 375px;
       height: 100%;
-      background: white;
+      background: #015688;
+      color: white;
       transform: translateX(100%);
       transition: transform 0.3s ease;
       z-index: 10;
@@ -50,7 +58,7 @@
     }
 
     #formPanel.open+#toggleTab {
-      transform: translateX(-300px);
+      transform: translateX(-375px);
     }
 
     #formPanel form {
@@ -65,11 +73,34 @@
       margin-bottom: 10px;
       padding: 8px;
     }
+
+    .esri-ui .esri-component.esri-zoom {
+      background-color: #015688;
+      color: white !important;
+      ;
+      border-radius: 12px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+
+    .esri-ui .esri-component.esri-zoom .esri-widget--button {
+      color: white !important;
+      ;
+      background-color: transparent;
+      border: none;
+    }
+
+
+
+    .esri-ui .esri-component.esri-zoom .esri-widget--button:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
   </style>
 </head>
 
 <body>
   <div id="viewDiv"></div>
+  <div id="titlePill">Orca Encounters Map</div>
   <div id="formPanel">
     <h3 style="padding: 0px">Report Orca Sighting</h3>
     <form id="sightingForm">
@@ -86,7 +117,7 @@
       <textarea id="remarks" placeholder="Remarks"></textarea>
       <input type="number" step="any" id="latitude" placeholder="Latitude" required />
       <input type="number" step="any" id="longitude" placeholder="Longitude" required />
-      <button type="button" id="selectMap">Click on Map</button>
+      <button type="button" id="selectMap">Click Map For Location</button>
       <button type="button" id="useDevice">Use My Location</button>
       <button type="submit">Submit</button>
     </form>
@@ -153,9 +184,10 @@
         if (isNaN(lat) || isNaN(lon)) return alert("Invalid coordinates");
 
         const attrs = {
+          id: generateUUID(),
           boatname: document.getElementById("boatname").value,
-          dateStr: document.getElementById("date").value,
-          timeStr: document.getElementById("time").value,
+          date: document.getElementById("date").value,
+          time: document.getElementById("time").value,
           zona: document.getElementById("zona").value,
           eventtype: document.getElementById("eventtype").value,
           boatdamage: document.getElementById("boatdamage").value,
@@ -178,6 +210,15 @@
         }).catch(error => console.error("Submission error:", error));
       });
     });
+
+    function generateUUID() {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    }
+
   </script>
 </body>
 
