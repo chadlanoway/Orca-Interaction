@@ -7,7 +7,7 @@
   <title>Orca Encounters Map</title>
   <link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/light/main.css" />
   <style>
-    /* This took forever to figure out how to target the + and -*/
+    /* This took FOREVER to figure out how to target the + and - in the zoom*/
     .calcite-mode-light {
       --calcite-color-text-1: black !important;
       --calcite-color-text-2: #ffffff !important;
@@ -72,6 +72,8 @@
       width: 100%;
       margin-bottom: 10px;
       padding: 8px;
+      padding-right: 16px;
+      box-sizing: border-box;
     }
 
     /* override the other calcite stuff */
@@ -135,9 +137,9 @@
     </form>
   </div>
   <div id="toggleTab">▶</div>
-
   <script src="https://js.arcgis.com/4.29/"></script>
   <script>
+    // set up the map
     require([
       "esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/Graphic"
     ], function (Map, MapView, FeatureLayer, Graphic) {
@@ -156,22 +158,23 @@
       });
 
       view.ui.move("zoom", "bottom-left");
-
+      // control variables for choosing coords
       let selectedPoint = null;
       let selectingFromMap = false;
-
+      // submission form
       const toggleTab = document.getElementById("toggleTab");
       const formPanel = document.getElementById("formPanel");
+      // listen for open/close form
       toggleTab.addEventListener("click", () => {
         formPanel.classList.toggle("open");
         toggleTab.textContent = formPanel.classList.contains("open") ? "▶" : "◀";
       });
-
+      // listen for "click on map" button, flip control, alert user
       document.getElementById("selectMap").addEventListener("click", () => {
         selectingFromMap = true;
         alert("Click on the map to select location.");
       });
-
+      // listen for the geolocate button
       document.getElementById("useDevice").addEventListener("click", () => {
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(pos => {
@@ -182,7 +185,7 @@
           alert("Geolocation not supported.");
         }
       });
-
+      // get coords from map click ONLY IF "click on map" was chosen. Otherwise default click and drag pan
       view.on("click", event => {
         if (selectingFromMap) {
           document.getElementById("latitude").value = event.mapPoint.latitude.toFixed(6);
@@ -190,13 +193,13 @@
           selectingFromMap = false;
         }
       });
-
+      // listen for submit button
       document.getElementById("sightingForm").addEventListener("submit", e => {
         e.preventDefault();
         const lat = parseFloat(document.getElementById("latitude").value);
         const lon = parseFloat(document.getElementById("longitude").value);
         if (isNaN(lat) || isNaN(lon)) return alert("Invalid coordinates");
-
+        // get the row/feature ready
         const attrs = {
           id: generateUUID(),
           boatname: document.getElementById("boatname").value,
@@ -224,7 +227,7 @@
         }).catch(error => console.error("Submission error:", error));
       });
     });
-    /* make a unique id for the row */
+    /* function to make a unique id for the row. way cooler than using uid import */
     function generateUUID() {
       return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
         const r = Math.random() * 16 | 0;
