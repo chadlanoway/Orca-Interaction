@@ -7,7 +7,7 @@
   <title>Orca Encounters Map</title>
   <link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/light/main.css" />
   <style>
-    /* This took forever to figure out what to target */
+    /* This took forever to figure out how to target the + and -*/
     .calcite-mode-light {
       --calcite-color-text-1: black !important;
       --calcite-color-text-2: #ffffff !important;
@@ -27,7 +27,7 @@
       position: absolute;
       top: 0;
       right: 0;
-      width: 375px;
+      width: 300px;
       height: 100%;
       background: #015688;
       color: white;
@@ -44,7 +44,7 @@
 
     #toggleTab {
       position: absolute;
-      top: 20px;
+      top: 200px;
       right: 0;
       transform: translateX(0);
       background: #015688;
@@ -58,7 +58,7 @@
     }
 
     #formPanel.open+#toggleTab {
-      transform: translateX(-375px);
+      transform: translateX(-300px);
     }
 
     #formPanel form {
@@ -74,6 +74,7 @@
       padding: 8px;
     }
 
+    /* override the other calcite stuff */
     .esri-ui .esri-component.esri-zoom {
       background-color: #015688;
       color: white !important;
@@ -85,24 +86,35 @@
 
     .esri-ui .esri-component.esri-zoom .esri-widget--button {
       color: white !important;
-      ;
       background-color: transparent;
       border: none;
     }
 
-
-
     .esri-ui .esri-component.esri-zoom .esri-widget--button:hover {
       background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    #titlePill {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: #015688;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 9999px;
+      font-size: 18px;
+      font-weight: bold;
+      z-index: 12;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
     }
   </style>
 </head>
 
 <body>
   <div id="viewDiv"></div>
-  <div id="titlePill">Orca Encounters Map</div>
+  <div id="titlePill">Orca-Watch</div>
   <div id="formPanel">
-    <h3 style="padding: 0px">Report Orca Sighting</h3>
+    <h3 style="padding: 0px; text-align: center; width: 100%;">Report Orca Sighting</h3>
     <form id="sightingForm">
       <input type="text" id="boatname" placeholder="Boat Name" required />
       <input type="date" id="date" required />
@@ -143,6 +155,8 @@
         zoom: 5
       });
 
+      view.ui.move("zoom", "bottom-left");
+
       let selectedPoint = null;
       let selectingFromMap = false;
 
@@ -150,7 +164,7 @@
       const formPanel = document.getElementById("formPanel");
       toggleTab.addEventListener("click", () => {
         formPanel.classList.toggle("open");
-        toggleTab.textContent = formPanel.classList.contains("open") ? "◀" : "▶";
+        toggleTab.textContent = formPanel.classList.contains("open") ? "▶" : "◀";
       });
 
       document.getElementById("selectMap").addEventListener("click", () => {
@@ -210,7 +224,7 @@
         }).catch(error => console.error("Submission error:", error));
       });
     });
-
+    /* make a unique id for the row */
     function generateUUID() {
       return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
         const r = Math.random() * 16 | 0;
