@@ -78,7 +78,6 @@
       box-sizing: border-box;
     }
 
-    /* override the other calcite stuff */
     .esri-ui .esri-component.esri-zoom {
       background-color: #015688;
       color: white !important;
@@ -111,6 +110,69 @@
       z-index: 12;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
       opacity: 0.8;
+    }
+
+    .esri-popup__main-container {
+      background-color: rgb(1, 104, 144) !important;
+      color: white !important;
+      border-radius: 12px !important;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+    }
+
+    .esri-popup__header-container,
+    .esri-popup__header-title {
+      background-color: rgb(1, 104, 144) !important;
+      color: white !important;
+      border-bottom: 1px solid white !important;
+    }
+
+    .esri-features__container {
+      background-color: rgb(1, 104, 144) !important;
+      color: white !important;
+      padding: 12px !important;
+    }
+
+    .esri-feature {
+      background-color: rgb(1, 104, 144) !important;
+      color: white !important;
+      border-radius: 0px !important;
+    }
+
+    .esri-popup__button,
+    .esri-popup__button svg {
+      color: black !important;
+      fill: white !important;
+    }
+
+    .calcite-mode-light {
+      --calcite-color-text-1: white !important;
+      --calcite-color-text-2: white !important;
+      --calcite-color-text-3: white !important;
+      --calcite-color-background: rgb(1, 104, 144) !important;
+    }
+
+    .esri-popup__footer,
+    .esri-popup__main-container calcite-action-group,
+    .esri-popup__main-container calcite-action,
+    calcite-action-group {
+      display: none !important;
+      height: 0 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      visibility: hidden !important;
+    }
+
+    .esri-popup__footer,
+    calcite-action-bar,
+    calcite-action-group,
+    .esri-popup__main-container calcite-action-group,
+    .esri-popup__main-container calcite-action {
+      display: none !important;
+      height: 0 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      visibility: hidden !important;
     }
   </style>
 </head>
@@ -161,6 +223,41 @@
       });
 
       view.ui.move("zoom", "bottom-left");
+      view.popup.defaultPopupTemplateEnabled = false;
+      view.popup.actions = []; // completely removes the action bar
+
+      // pop up
+      const popUp = new FeatureLayer({
+        url: featureLayerUrl,
+        apiKey: apiKey,
+        popupTemplate: {
+          title: "{date}",
+          content: `
+            <b>Event:</b> {eventtype}<br/>
+            <b>Time:</b> {time}<br/>
+            <b>Zone:</b> {zona}<br/>
+            <b>Latitude:</b> {latitude}<br/>
+            <b>Longitude:</b> {longitude}<br/>
+            <b>Boat Name:</b> {boatname}<br/>
+            <b>Country:</b> {country}<br/>
+            <b>Boat Damage:</b> {boatdamage}<br/>
+            <b>Remarks:</b><br/>{remarks}
+          `
+        }
+      });
+      map.add(popUp);
+      // make the mouse a pointer
+      view.on("pointer-move", function (event) {
+        view.hitTest(event).then(function (response) {
+          const results = response.results;
+          if (results.length && results[0].graphic.layer === popUp) {
+            view.container.style.cursor = "pointer";
+          } else {
+            view.container.style.cursor = "default";
+          }
+        });
+      });
+
       // control variables for choosing coords
       let selectedPoint = null;
       let selectingFromMap = false;
