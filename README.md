@@ -2,6 +2,11 @@
 
 A simple web application for reporting and visualizing orca‐boat interactions on an interactive ArcGIS map.
 
+## Demo
+
+Check out the live demo here:  
+https://chadlanoway.github.io/Orca-Interaction/
+
 ## Features
 
 - **Interactive Map**  
@@ -20,11 +25,6 @@ A simple web application for reporting and visualizing orca‐boat interactions 
   - Styled with Barlow Condensed font  
 
 # Orca Encounters Map
-
-## Demo
-
-Check out the live demo here:  
-https://chadlanoway.github.io/Orca-Interaction/
 
 ## Installation
 
