@@ -19,6 +19,13 @@ A simple web application for reporting and visualizing orca‐boat interactions 
   - Filter pill for event types  
   - Styled with Barlow Condensed font  
 
+# Orca Encounters Map
+
+## Demo
+
+Check out the live demo here:  
+https://chadlanoway.github.io/Orca-Interaction/
+
 ## Installation
 
 1. **Clone the repository**  
