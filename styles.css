@@ -1,0 +1,321 @@
+ /* Style whatever calcite stuff that's not going to be overridden*/
+ .calcite-mode-light {
+     --calcite-color-text-1: black !important;
+     --calcite-color-text-2: #ffffff !important;
+     --calcite-color-text-3: #ffffff !important;
+ }
+
+ /* Base styles */
+ html,
+ body,
+ #viewDiv {
+     padding: 0;
+     margin: 0;
+     height: 100%;
+     width: 100%;
+ }
+
+ *,
+ input,
+ select,
+ textarea,
+ button {
+     font-family: 'Barlow Condensed', sans-serif !important;
+     box-sizing: border-box;
+ }
+
+ /* Form panel */
+ #formPanel {
+     position: absolute;
+     top: 0;
+     right: 0;
+     width: 300px;
+     height: 100%;
+     background: #015688;
+     color: white;
+     transform: translateX(100%);
+     transition: transform 0.3s ease;
+     z-index: 10;
+     box-shadow: -2px 0 6px rgba(0, 0, 0, 0.2);
+     overflow-y: auto;
+     opacity: 0.8;
+ }
+
+ #formPanel.open {
+     transform: translateX(0);
+ }
+
+ #toggleTab {
+     position: absolute;
+     top: 200px;
+     right: 0;
+     background: #015688;
+     color: white;
+     padding: 10px;
+     cursor: pointer;
+     z-index: 11;
+     border-radius: 5px 0 0 5px;
+     transition: transform 0.3s ease;
+     opacity: 0.8;
+ }
+
+ #formPanel.open+#toggleTab {
+     transform: translateX(-300px);
+ }
+
+ #formPanel form {
+     padding: 10px;
+ }
+
+ input,
+ select,
+ textarea,
+ button {
+     margin-bottom: 10px;
+     padding: 8px;
+ }
+
+ /* UI widgets */
+ .esri-ui .esri-component.esri-zoom {
+     background-color: #015688;
+     color: white !important;
+     border-radius: 12px;
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+     opacity: 0.8;
+ }
+
+ .esri-ui .esri-component.esri-zoom .esri-widget--button {
+     color: white !important;
+     background-color: transparent;
+     border: none;
+ }
+
+ .esri-ui .esri-component.esri-zoom .esri-widget--button:hover {
+     background-color: rgba(255, 255, 255, 0.1);
+ }
+
+ /* Combined title + filter pill */
+ #controlPill {
+     display: flex;
+     flex-direction: column;
+     align-items: flex-start;
+     gap: 4px;
+     position: absolute;
+     top: 10px;
+     left: 10px;
+     background-color: #015688;
+     color: white;
+     display: flex;
+     align-items: center;
+     gap: 12px;
+     padding: 8px 12px;
+     border-radius: 25px;
+     font-size: 18px;
+     font-weight: bold;
+     z-index: 12;
+     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+     opacity: 0.8;
+ }
+
+ #controlPill .pill-title {
+     white-space: nowrap;
+     font-size: 20px;
+ }
+
+ .filter-blurb {
+     font-size: 12px;
+ }
+
+ #controlPill select {
+     background: transparent;
+     color: white;
+     border: none;
+     font-size: 18px;
+     font-weight: bold;
+     width: auto;
+     padding: 0;
+     margin: 0;
+ }
+
+ #controlPill select option {
+     color: black;
+ }
+
+ /* Crazy amount of custom popup styles  */
+ .esri-popup .custom-popup {
+     background: transparent;
+     font-family: 'Barlow Condensed', sans-serif !important;
+     line-height: 20px;
+     overflow: hidden;
+     border-radius: 12px;
+ }
+
+ .esri-popup .custom-popup .title,
+ .esri-popup .custom-popup .content {
+     padding: 10px;
+ }
+
+ .esri-popup .custom-popup .title {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     position: relative;
+     background: #015688;
+     opacity: 0.8;
+ }
+
+ .esri-popup .custom-popup .title h2 {
+     color: #FFF;
+     font-size: 15px;
+     margin: 2px 0;
+     align-items: left;
+ }
+
+ .esri-popup .custom-popup .content {
+     background: #f7f7f7;
+     color: #333;
+ }
+
+ .esri-popup .custom-popup table {
+     width: 100%;
+ }
+
+ .esri-popup .custom-popup tr {
+     border-bottom: #e0e0e0 1px solid;
+ }
+
+ .esri-popup .custom-popup td {
+     line-height: 1em;
+     padding: 5px 4px;
+ }
+
+ .esri-popup .custom-popup .attrname {
+     color: #000;
+     padding-right: 8px;
+ }
+
+ .esri-popup .custom-popup .attrvalue {
+     color: #555;
+     word-break: break-word;
+     overflow-wrap: anywhere;
+ }
+
+ .esri-popup .custom-popup .footer {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     width: 100%;
+ }
+
+ .esri-popup .custom-popup .content button {
+     display: flex;
+     align-items: center;
+     gap: 4px;
+     margin-top: 10px;
+     padding: 4px 8px;
+     font-weight: 600;
+     background: transparent;
+     border: 1px solid rgba(0, 0, 0, 0.1);
+     color: #333;
+     cursor: pointer;
+ }
+
+ .esri-popup .custom-popup .content button:hover {
+     background: rgba(0, 0, 0, 0.1);
+ }
+
+ .esri-popup .custom-popup .close-button {
+     background: transparent;
+     border: none;
+     font-size: 14px;
+     color: rgba(255, 255, 255, 0.5);
+     cursor: pointer;
+     padding: 4px;
+ }
+
+ .esri-popup .custom-popup .close-button:hover {
+     color: rgba(255, 255, 255, 1);
+ }
+
+ .esri-popup.esri-popup--shadow {
+     box-shadow: 0 0 0.75em #777;
+     border-radius: 12px;
+ }
+
+ .esri-popup .esri-popup__main-container {
+     width: auto;
+     min-width: 250px;
+     max-width: 340px;
+     background: transparent;
+     border-radius: 12px;
+ }
+
+ .esri-popup .esri-features__container,
+ .esri-popup .esri-feature__content-element {
+     padding: 0;
+     margin: 0;
+     background: transparent;
+ }
+
+ .esri-popup calcite-flow {
+     --calcite-color-foreground-1: none;
+ }
+
+ .esri-popup .custom-popup .title {
+     width: 100%;
+ }
+
+ .esri-popup .custom-popup .close-button {
+     margin-left: auto;
+ }
+
+ .esri-popup .custom-popup .title {
+     justify-content: flex-start !important;
+     padding-left: 40px !important;
+ }
+
+ .esri-popup .custom-popup .close-button {
+     left: 10px !important;
+     right: auto !important;
+ }
+
+ .esri-popup .custom-popup iframe {
+     width: 100%;
+     height: auto;
+     display: block;
+ }
+
+ /* last minute borders */
+ #controlPill {
+     border: 2px solid white;
+ }
+
+ #toggleTab,
+ #formPanel {
+     border: 2px solid white;
+     border-right: none;
+ }
+
+ .esri-ui .esri-component.esri-zoom {
+     border: 2px solid white;
+     padding: 2px;
+ }
+
+ /* color the bullets to serve as a sort of legend */
+
+ #controlPill select option[value="sighting"] {
+     color: rgba(0, 149, 179, 0.8);
+ }
+
+ #controlPill select option[value="attack"] {
+     color: rgba(255, 140, 0, 0.8);
+ }
+
+ /* ‘All’ can stay black (or pick a neutral gray) */
+ #controlPill select option[value="All"] {
+     color: rgba(0, 0, 0, 0.8);
+ }
+
+ #eventFilter option {
+     background-color: lightgrey !important;
+ }
