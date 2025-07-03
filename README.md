@@ -24,8 +24,6 @@ https://chadlanoway.github.io/Orca-Interaction/
   - Filter pill for event types  
   - Styled with Barlow Condensed font  
 
-# Orca Encounters Map
-
 ## Installation
 
 1. **Clone the repository**  
