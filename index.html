@@ -85,29 +85,22 @@
       });
       map.add(editLayer);
 
-      // Layer for sightings
-      const sightingsLayer = new FeatureLayer({
+      function createLayer(eventType, color) {
+      return new FeatureLayer({
         url: layerUrl,
         apiKey: apiKey,
-        definitionExpression: "eventtype = 'sighting'",
-        // Turn on client-side clustering
+        definitionExpression: `eventtype = '${eventType}'`,
         featureReduction: {
           type: "cluster",
           clusterRadius: "60px",
           clusterMinSize: "16px",
           clusterMaxSize: "60px",
-          // Add cluster count as a label
           labelingInfo: [
             {
-              // Deal with label collisions
               deconflictionStrategy: "static",
-
-              // Pull in the number of points in the cluster
               labelExpressionInfo: {
                 expression: "$feature.cluster_count"
               },
-
-              // Text style
               symbol: {
                 type: "text",
                 color: "white",
@@ -121,58 +114,21 @@
             }
           ]
         },
-        // Style the clusters
         renderer: new SimpleRenderer({
           symbol: new SimpleMarkerSymbol({
             style: "circle",
             size: 12,
-            color: [0, 149, 179, 0.7],
+            color: color,
             outline: { color: [255, 255, 255, 1], width: 1 }
           })
         })
       });
+    }
 
-      map.add(sightingsLayer);
-      // Do the same for attacks layer
-      const attacksLayer = new FeatureLayer({
-        url: layerUrl,
-        apiKey: apiKey,
-        definitionExpression: "eventtype = 'attack'",
-        featureReduction: {
-          type: "cluster",
-          clusterRadius: "60px",
-          clusterMinSize: "16px",
-          clusterMaxSize: "60px",
-          labelingInfo: [
-            {
-              deconflictionStrategy: "static",
-
-              labelExpressionInfo: {
-                expression: "$feature.cluster_count"
-              },
-              symbol: {
-                type: "text",
-                font: {
-                  family: "Noto Sans",
-                  size: "12px",
-                  weight: "normal"
-                }
-              },
-              labelPlacement: "center-center"
-            }
-          ]
-        },
-        renderer: new SimpleRenderer({
-          symbol: new SimpleMarkerSymbol({
-            style: "circle",
-            size: 12,
-            color: [255, 140, 0, 0.7],
-            outline: { color: [255, 255, 255, 1], width: 1 }
-          })
-        })
-      });
-      map.add(attacksLayer);
-
+    // Create layers with new function
+    const sightingsLayer = createLayer("sighting", [0, 149, 179, 0.7]);
+    const attacksLayer = createLayer("attack", [255, 140, 0, 0.7]);
+    map.addMany([sightingsLayer, attacksLayer]);
 
       // Object to display attachments
       const attachmentsElement = new AttachmentsContent({
